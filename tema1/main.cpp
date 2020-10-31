@@ -8,14 +8,14 @@ class incapere
     float Lu,l;
     friend class proprietar;
 public:
-    incapere(std::string ,float ,float );
+    incapere(std::string="hol",float=4 ,float=2);
     incapere(const incapere &);
     void afisare_arie();
-    int arie();
+    float arie();
     std::string get_nume();
 };
 
-incapere::incapere(std::string nume="hol",float Lu=4,float l=2)
+incapere::incapere(std::string nume ,float Lu ,float l )
 {
 this->nume = nume;
 this->Lu=Lu;
@@ -23,20 +23,21 @@ this->l=l;
 }
 incapere::incapere(const incapere &c)
 {
+    this->nume=c.nume;
     this->Lu = c.Lu;
     this->l  = c.l;
 }
 void incapere::afisare_arie()
 {
-    cout<<"Aceasta incapere("<<nume<<") are "<<Lu*l<<" metrii patrati"<<endl;
+    cout<<endl<<"Aceasta incapere are "<<Lu*l<<" metrii patrati"<<endl;
 }
-int incapere::arie()
+float incapere::arie()
 {
     return Lu*l;
 }
 std::string incapere::get_nume()
 {
-    return nume;
+    return nume+" ";
 }
 
 class adresa
@@ -51,15 +52,15 @@ class adresa
     std::string judet;
     friend class proprietar;
 public:
-    adresa(std::string ,int ,std::string ,int ,int ,std::string ,std::string ,std::string );
+    adresa(std::string="Unirii" ,int =23,std::string="M4 bis" ,int=4 ,int=132 ,std::string="0132",std::string="Bucuresti" ,std::string ="Sector3");
     adresa(const adresa& );
     void afisare_adresa();
     std::string get_adresa();
 
 };
 
-adresa::adresa(std::string strada="Unirii",int numar=23,std::string bloc="M4 bis",int etaj=4,int apartament=132,
-        std::string interfon="0132",std::string oras="Bucuresti",std::string judet="Sector3")
+adresa::adresa(std::string strada,int numar,std::string bloc,int etaj,int apartament,
+        std::string interfon,std::string oras,std::string judet)
 {
 this->strada=strada;
 this->numar=numar;
@@ -83,15 +84,15 @@ adresa::adresa(const adresa& a)
 }
 void adresa:: afisare_adresa()
 {
-    cout<<"Adresa este: strada "<<strada<<", numarul "<<numar<<", blocul "<<bloc<<", etajul ";
-    cout<<etaj<<endl<<", apartament"<<apartament<<", interfon"<<interfon<<", "<<oras<<","<<judet;
+    cout<<"Adresa introdusa este: strada "<<strada<<", numarul "<<numar<<", blocul "<<bloc<<", etajul ";
+    cout<<etaj<<", apartament"<<apartament<<", interfon"<<interfon<<", "<<oras<<","<<judet;
 }
 std::string adresa :: get_adresa()
 {
     std::string adres="Strada "+strada+", numarul "+std::to_string(numar)+", blocul "+bloc;
-    adres=adres+", aparatment "+std::to_string(apartament)+", interfon "+interfon+" "+oras+" "+judet;
+    adres=adres+", aparatment "+std::to_string(apartament)+", interfon "+interfon+" "+oras+","+judet;
     return adres;
-};
+}
 
 class proprietar
 {
@@ -101,17 +102,20 @@ class proprietar
     bool fm;
     std::string data_achizitionare;
 public:
-    proprietar(std::string nume,std::string,std::string , bool,std::string );
+    proprietar(std::string ="Popescu",std::string="Ana-Maria",std::string ="601225412043", bool=true,std::string="30.01.2000" );
     proprietar(const proprietar& );
     std::string get_nume();
     int rdn(int , int , int ) ;
     int durata(std::string );
     std::string get_apelativ();
+    void schimb_prenume(std::string);
+    void schimb_cnp(std::string);
+    void schimb_fm();
 
 };
 
-proprietar::proprietar(std::string nume="Popescu",std::string="Ana-Maria",std::string cnp="601225412043",
-                        bool fm=1,std::string data_achizitionare="30.01.2000")
+proprietar::proprietar(std::string nume,std::string prenume,std::string cnp,
+                        bool fm,std::string data_achizitionare)
 {
 this->nume=nume;
 this->prenume=prenume;
@@ -129,7 +133,7 @@ proprietar::proprietar(const proprietar& Ana)
 }
 std::string proprietar :: get_nume()
 {
-    return nume+prenume;
+    return nume+" "+prenume;
 }
 int proprietar::rdn(int y, int m, int d) { /* Rata Die day one is 0001-01-01 */
     if (m < 3)
@@ -160,9 +164,21 @@ int proprietar::durata(std::string data_curenta)
     return zile;
 
 }
+void proprietar::schimb_prenume(std::string prenume2)
+{
+    this->prenume=prenume2;
+}
+void proprietar::schimb_cnp(std::string cnp2)
+{
+    this->cnp=cnp2;
+}
+void proprietar:: schimb_fm()
+{
+    this->fm=!fm;
+}
 std::string proprietar::get_apelativ()
 {
-    if(fm=1)
+    if(fm==true)
         return "Doamna ";
     else
         return "Domnul ";
@@ -171,8 +187,12 @@ std::string proprietar::get_apelativ()
 
 int main()
 {
-    proprietar Maricica;
-    adresa ad;
+    proprietar Ana,Ion(Ana);
+    adresa adAna,adIon(adAna);
+    adAna.afisare_adresa();
+    Ion.schimb_prenume("Ion");
+    Ion.schimb_cnp("5001109562301");
+    Ion.schimb_fm();
     int nr_camere=3;
     incapere camera[nr_camere-1];
     camera[0]= incapere("sufragerie",5,4);
@@ -183,16 +203,17 @@ int main()
     incapere bucatarie("bucatarie",3.5,2.5);
     incapere debara("debara",1,0.5);
     incapere balcon1("balcon",2,2);
-    incapere balcon2;
-    balcon2=balcon1;
+    incapere balcon2(balcon1);
     balcon2.afisare_arie();
-    int zile= Maricica.durata("31.10.2020");
+    cout<<balcon2.get_nume();
+    int zile= Ana.durata("31.10.2020");
     if(zile<30)
-        cout<<endl<<Maricica.get_apelativ()<<Maricica.get_nume()<<"are locuinta de la adresa "<<ad.get_adresa()<<" de "<<zile<<" zile"<<endl;
+        cout<<endl<<Ana.get_apelativ()<<Ana.get_nume()<<"are locuinta de la adresa "<<adAna.get_adresa()<<" de "<<zile<<" zile"<<endl;
     if((zile>=30) && zile < 365)
-        cout<<endl<<Maricica.get_apelativ()<<Maricica.get_nume()<<"are locuinta de la adresa "<<ad.get_adresa()<<" de "<<zile/30<<" luni"<<endl;
+        cout<<endl<<Ana.get_apelativ()<<Ana.get_nume()<<"are locuinta de la adresa "<<adAna.get_adresa()<<" de "<<zile/30<<" luni"<<endl;
     if(zile>=365)
-        cout<<endl<<Maricica.get_apelativ()<<Maricica.get_nume()<<" are locuinta de la adresa "<<ad.get_adresa()<<" de "<<zile/365<<" ani"<<endl;
+        cout<<endl<<Ana.get_apelativ()<<Ana.get_nume()<<" are locuinta de la adresa "<<adAna.get_adresa()<<" de "<<zile/365<<" ani"<<endl;
+    cout<<endl<<Ion.get_apelativ()<<Ion.get_nume()<<"are o locuinta la adresa "<<adIon.get_adresa()<<"cu o sufragerie de "<<camera[0].arie()<<" de metrii patrati";
 
     return 0;
 }
