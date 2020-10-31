@@ -1,4 +1,5 @@
 #include <iostream>
+#include <utility>
 using std::cout;
 using std::endl;
 
@@ -8,16 +9,16 @@ class incapere
     float Lu,l;
     friend class proprietar;
 public:
-    incapere(std::string="hol",float=4 ,float=2);
+     explicit incapere(std::string="hol",float=4 ,float=2);
     incapere(const incapere &);
-    void afisare_arie();
-    float arie();
+    void afisare_arie() const;
+    float arie() const;
     std::string get_nume();
 };
 
 incapere::incapere(std::string nume ,float Lu ,float l )
 {
-this->nume = nume;
+this->nume = std::move(nume);
 this->Lu=Lu;
 this->l=l;
 }
@@ -27,11 +28,11 @@ incapere::incapere(const incapere &c)
     this->Lu = c.Lu;
     this->l  = c.l;
 }
-void incapere::afisare_arie()
+void incapere::afisare_arie() const
 {
     cout<<endl<<"Aceasta incapere are "<<Lu*l<<" metrii patrati"<<endl;
 }
-float incapere::arie()
+float incapere::arie() const
 {
     return Lu*l;
 }
@@ -52,7 +53,7 @@ class adresa
     std::string judet;
     friend class proprietar;
 public:
-    adresa(std::string="Unirii" ,int =23,std::string="M4 bis" ,int=4 ,int=132 ,std::string="0132",std::string="Bucuresti" ,std::string ="Sector3");
+    explicit adresa(std::string="Unirii" ,int =23,std::string="M4 bis" ,int=4 ,int=132 ,std::string="0132",std::string="Bucuresti" ,std::string ="Sector3");
     adresa(const adresa& );
     void afisare_adresa();
     std::string get_adresa();
@@ -102,12 +103,12 @@ class proprietar
     bool fm;
     std::string data_achizitionare;
 public:
-    proprietar(std::string ="Popescu",std::string="Ana-Maria",std::string ="601225412043", bool=true,std::string="30.01.2000" );
+    explicit proprietar(std::string ="Popescu",std::string="Ana-Maria",std::string ="601225412043", bool=true,std::string="30.01.2000" );
     proprietar(const proprietar& );
     std::string get_nume();
-    int rdn(int , int , int ) ;
+    static int rdn(int , int , int ) ;
     int durata(std::string );
-    std::string get_apelativ();
+    std::string get_apelativ() const;
     void schimb_prenume(std::string);
     void schimb_cnp(std::string);
     void schimb_fm();
@@ -176,13 +177,9 @@ void proprietar:: schimb_fm()
 {
     this->fm=!fm;
 }
-std::string proprietar::get_apelativ()
+std::string proprietar::get_apelativ() const
 {
-    if(fm==true)
-        return "Doamna ";
-    else
-        return "Domnul ";
-
+    return (fm) ? "Doamna " : "Domnul ";
 }
 
 int main()
@@ -194,7 +191,7 @@ int main()
     Ion.schimb_cnp("5001109562301");
     Ion.schimb_fm();
     int nr_camere=3;
-    incapere camera[nr_camere-1];
+    incapere camera[nr_camere];
     camera[0]= incapere("sufragerie",5,4);
     camera[1]= incapere("dormitor1",4,3);
     camera[2]= incapere("dormitor2",3.5,3);
