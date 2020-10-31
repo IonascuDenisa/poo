@@ -107,7 +107,7 @@ public:
     proprietar(const proprietar& );
     std::string get_nume();
     static int rdn(int , int , int ) ;
-    int durata(std::string );
+    int durata(const std::string& );
     std::string get_apelativ() const;
     void schimb_prenume(std::string);
     void schimb_cnp(std::string);
@@ -141,7 +141,7 @@ int proprietar::rdn(int y, int m, int d) { /* Rata Die day one is 0001-01-01 */
         y--, m += 12;
     return 365*y + y/4 - y/100 + y/400 + (153*m - 457)/5 + d - 306;
 }
-int proprietar::durata(std::string data_curenta)
+int proprietar::durata(const std::string & data_curenta)
 {
     std::string zi_curenta_string=data_curenta.substr(0,2);
     int zi_curenta=std::stoi(zi_curenta_string);
