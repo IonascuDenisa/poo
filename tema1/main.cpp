@@ -30,7 +30,7 @@ incapere::incapere(const incapere &c)
 }
 void incapere::afisare_arie() const
 {
-    cout<<endl<<"Aceasta incapere are "<<Lu*l<<" metrii patrati"<<endl;
+    cout<<endl<<"Aceasta incapere are "<<arie()<<" metrii patrati - ";
 }
 float incapere::arie() const
 {
@@ -113,6 +113,8 @@ public:
     void schimb_cnp(std::string);
     void schimb_fm();
 
+    adresa adr;
+
 };
 
 proprietar::proprietar(std::string nume,std::string prenume,std::string cnp,
@@ -185,8 +187,8 @@ std::string proprietar::get_apelativ() const
 int main()
 {
     proprietar Ana,Ion(Ana);
-    adresa adAna,adIon(adAna);
-    adAna.afisare_adresa();
+    adresa adIon;
+    Ana.adr.afisare_adresa();cout<<endl;
     Ion.schimb_prenume("Ion");
     Ion.schimb_cnp("5001109562301");
     Ion.schimb_fm();
@@ -202,15 +204,16 @@ int main()
     incapere balcon1("balcon",2,2);
     incapere balcon2(balcon1);
     balcon2.afisare_arie();
-    cout<<balcon2.get_nume();
+    cout<<balcon2.get_nume()<<endl;
     int zile= Ana.durata("31.10.2020");
     if(zile<30)
-        cout<<endl<<Ana.get_apelativ()<<Ana.get_nume()<<"are locuinta de la adresa "<<adAna.get_adresa()<<" de "<<zile<<" zile"<<endl;
+        cout<<endl<<Ana.get_apelativ()<<Ana.get_nume()<<"are locuinta de la adresa "<<Ana.adr.get_adresa()<<" de "<<zile<<" zile"<<endl;
     if((zile>=30) && zile < 365)
-        cout<<endl<<Ana.get_apelativ()<<Ana.get_nume()<<"are locuinta de la adresa "<<adAna.get_adresa()<<" de "<<zile/30<<" luni"<<endl;
+        cout<<endl<<Ana.get_apelativ()<<Ana.get_nume()<<"are locuinta de la adresa "<<Ana.adr.get_adresa()<<" de "<<zile/30<<" luni"<<endl;
     if(zile>=365)
-        cout<<endl<<Ana.get_apelativ()<<Ana.get_nume()<<" are locuinta de la adresa "<<adAna.get_adresa()<<" de "<<zile/365<<" ani"<<endl;
-    cout<<endl<<Ion.get_apelativ()<<Ion.get_nume()<<"are o locuinta la adresa "<<adIon.get_adresa()<<"cu o sufragerie de "<<camera[0].arie()<<" de metrii patrati";
+        cout<<endl<<Ana.get_apelativ()<<Ana.get_nume()<<" are locuinta de la adresa "<<Ana.adr.get_adresa()<<" de "<<zile/365<<" ani"<<endl;
+    cout<<endl<<Ion.get_apelativ()<<Ion.get_nume()<<" are o locuinta la adresa "<<adIon.get_adresa()<<" cu o sufragerie de "<<camera[0].arie()<<" de metrii patrati";
+
 
     return 0;
 }
