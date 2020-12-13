@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include <utility>
 using std::cout;
 using std::endl;
@@ -15,8 +14,24 @@ public:
     void afisare_arie() const;
     float arie() const;
     std::string get_nume();
+    void schimbare_nume(std::string);
+    incapere& operator=(incapere x);
 };
-
+void incapere::schimbare_nume(std::string n)
+{
+    nume=n;
+}
+incapere& incapere ::operator=(incapere x)
+{
+    if(this==&x)
+        return *this;
+    else
+    {
+        lungime=x.lungime;
+        latime=x.latime;
+    }
+    return *this;
+}
 incapere::incapere(std::string nume ,float lungime ,float latime )
 {
 this->nume = std::move(nume);
@@ -253,11 +268,13 @@ int main()
     Ion.schimb_prenume("Ion");
     Ion.schimb_cnp("5001109562301");
     Ion.schimb_fm();
-    int nr_camere=3;
+    int nr_camere=4;
     incapere camera[nr_camere];
     camera[0]= incapere("sufragerie",5,4);
     camera[1]= incapere("dormitor1",4,3);
-    camera[2]= incapere("dormitor2",3.5,3);
+    camera[2]=camera[1]=camera[3];
+    camera[2].schimbare_nume("dormitor2");
+    camera[3].schimbare_nume("dormitor3");
     incapere hol("hol",4,2);
     incapere baie("baie",3,2);
     incapere bucatarie("bucatarie",3.5,2.5);
