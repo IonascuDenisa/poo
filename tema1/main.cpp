@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <utility>
 using std::cout;
 using std::endl;
@@ -106,14 +107,15 @@ public:
     explicit proprietar(std::string ="Popescu",std::string="Ana-Maria",std::string ="601225412043", bool=true,std::string="30.01.2000" );
     proprietar(const proprietar& );
     std::string get_nume();
-    static int rdn(int , int , int ) ;
-    int durata(const std::string& );
+
     std::string get_apelativ() const;
     void schimb_prenume(std::string);
     void schimb_cnp(std::string);
     void schimb_fm();
 
     adresa adr;
+    friend std::ostream& operator<<(std::ostream &os , const proprietar &p);
+    friend class perioada;
 
 };
 
@@ -138,34 +140,54 @@ std::string proprietar :: get_nume()
 {
     return nume+" "+prenume;
 }
-int proprietar::rdn(int y, int m, int d) { /* Rata Die day one is 0001-01-01 */
+
+class perioada
+{
+    std::string data1,data2;
+public:
+    perioada(std::string,std::string);
+    perioada(std::string,const proprietar&);
+    static int rdn(int , int , int ) ;
+    int durata();
+};
+int perioada::rdn(int y, int m, int d) { /* Rata Die day one is 0001-01-01 */
     if (m < 3)
         y--, m += 12;
     return 365*y + y/4 - y/100 + y/400 + (153*m - 457)/5 + d - 306;
 }
-int proprietar::durata(const std::string & data_curenta)
+int perioada::durata() //data1=data curenta;data2=data achizitionare sau orice data din trecut
 {
-    std::string zi_curenta_string=data_curenta.substr(0,2);
+    std::string zi_curenta_string=data1.substr(0,2);
     int zi_curenta=std::stoi(zi_curenta_string);
 
-    std::string luna_curenta_string=data_curenta.substr(3,2);
+    std::string luna_curenta_string=data1.substr(3,2);
     int luna_curenta=std::stoi(luna_curenta_string);
 
-    std:: string an_curent_string=data_curenta.substr(6,4);
+    std:: string an_curent_string=data1.substr(6,4);
     int an_curent=std::stoi(an_curent_string);
 
-    std::string zi_achizitionare_string=data_achizitionare.substr(0,2);
+    std::string zi_achizitionare_string=data2.substr(0,2);
     int zi_achizitioare=std::stoi(zi_achizitionare_string);
 
-    std::string luna_achizitionare_string=data_achizitionare.substr(3,2);
+    std::string luna_achizitionare_string=data2.substr(3,2);
     int luna_achizionare=std::stoi(luna_achizitionare_string);
 
-    std:: string an_achizitionare_string=data_achizitionare.substr(6,4);
+    std:: string an_achizitionare_string=data2.substr(6,4);
     int an_achizitionare=std::stoi(an_achizitionare_string);
 
     int zile = rdn(an_curent, luna_curenta, zi_curenta) - rdn(an_achizitionare, luna_achizionare, zi_achizitioare);
     return zile;
 
+}
+perioada::perioada(std::string data1,const proprietar &p)
+{
+    this->data1=data1;
+    data2=p.data_achizitionare;
+}
+perioada::perioada(std::string data1,std::string data2)
+{
+    this->data1=data1;
+    this->data2=data2;
 }
 void proprietar::schimb_prenume(std::string prenume2)
 {
@@ -182,6 +204,33 @@ void proprietar:: schimb_fm()
 std::string proprietar::get_apelativ() const
 {
     return (fm) ? "Doamna " : "Domnul ";
+}
+
+std::ostream& operator<< (std::ostream &os,proprietar &p)
+{
+    os<<endl<<p.get_apelativ()<<p.get_nume()<<" are o locuinta la adresa "<<p.adr.get_adresa();
+    return os;
+}
+
+void fisare_durata_rotunjita(int zi)
+{
+    if(zi<30)
+    {
+        cout<<zi;
+        if(zi>=20)
+            cout<<" de";
+        cout<<" zile ";
+    }
+    if((zi>=30) && zi < 365)
+        cout<<zi/30<<" luni ";
+    if(zi>=365)
+    {
+        cout<<zi/365;
+        if((zi/365) >= 20 )
+            cout<<" de";
+        cout<<" ani";
+    }
+
 }
 
 int main()
@@ -205,15 +254,12 @@ int main()
     incapere balcon2(balcon1);
     balcon2.afisare_arie();
     cout<<balcon2.get_nume()<<endl;
-    int zile= Ana.durata("31.10.2020");
-    if(zile<30)
-        cout<<endl<<Ana.get_apelativ()<<Ana.get_nume()<<"are locuinta de la adresa "<<Ana.adr.get_adresa()<<" de "<<zile<<" zile"<<endl;
-    if((zile>=30) && zile < 365)
-        cout<<endl<<Ana.get_apelativ()<<Ana.get_nume()<<"are locuinta de la adresa "<<Ana.adr.get_adresa()<<" de "<<zile/30<<" luni"<<endl;
-    if(zile>=365)
-        cout<<endl<<Ana.get_apelativ()<<Ana.get_nume()<<" are locuinta de la adresa "<<Ana.adr.get_adresa()<<" de "<<zile/365<<" ani"<<endl;
-    cout<<endl<<Ion.get_apelativ()<<Ion.get_nume()<<" are o locuinta la adresa "<<adIon.get_adresa()<<" cu o sufragerie de "<<camera[0].arie()<<" de metrii patrati";
+    perioada Ana_timp("31.10.2020",Ana);
+    int zile= Ana_timp.durata();
 
+    cout<<Ana<<" de ";fisare_durata_rotunjita(zile);cout<<"\n";
+    cout<<Ion<<" cu o sufragerie de "<<camera[0].arie()<<" de metrii patrati";
+    std::vector<int> v = {7, 5, 16, 8};
 
     return 0;
 }
