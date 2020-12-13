@@ -7,7 +7,7 @@ using std::endl;
 class incapere
 {
     std::string nume;
-    float Lu,l;
+    float lungime,latime;
     friend class proprietar;
 public:
      explicit incapere(std::string="hol",float=4 ,float=2);
@@ -17,17 +17,17 @@ public:
     std::string get_nume();
 };
 
-incapere::incapere(std::string nume ,float Lu ,float l )
+incapere::incapere(std::string nume ,float lungime ,float latime )
 {
 this->nume = std::move(nume);
-this->Lu=Lu;
-this->l=l;
+this->lungime=lungime;
+this->latime=latime;
 }
 incapere::incapere(const incapere &c)
 {
     this->nume=c.nume;
-    this->Lu = c.Lu;
-    this->l  = c.l;
+    this->lungime = c.lungime;
+    this->latime  = c.latime;
 }
 void incapere::afisare_arie() const
 {
@@ -35,7 +35,7 @@ void incapere::afisare_arie() const
 }
 float incapere::arie() const
 {
-    return Lu*l;
+    return lungime*latime;
 }
 std::string incapere::get_nume()
 {
@@ -103,22 +103,34 @@ class proprietar
     std::string cnp;
     bool fm;
     std::string data_achizitionare;
+    adresa adr;
 public:
     explicit proprietar(std::string ="Popescu",std::string="Ana-Maria",std::string ="601225412043", bool=true,std::string="30.01.2000" );
     proprietar(const proprietar& );
     std::string get_nume();
-
     std::string get_apelativ() const;
     void schimb_prenume(std::string);
     void schimb_cnp(std::string);
     void schimb_fm();
-
-    adresa adr;
     friend std::ostream& operator<<(std::ostream &os , const proprietar &p);
-    friend class perioada;
+    std::string get_data_achizitionare();
+    std::string get_adresa();
+    void afisare_adresa();
+     ///
 
 };
-
+void proprietar::afisare_adresa()
+{
+    adr.afisare_adresa();
+}
+std::string proprietar::get_adresa()
+{
+    return adr.get_adresa();
+}
+std::string proprietar::get_data_achizitionare()
+{
+    return data_achizitionare;
+}
 proprietar::proprietar(std::string nume,std::string prenume,std::string cnp,
                         bool fm,std::string data_achizitionare)
 {
@@ -146,7 +158,7 @@ class perioada
     std::string data1,data2;
 public:
     perioada(std::string,std::string);
-    perioada(std::string,const proprietar&);
+    perioada(std::string,proprietar&);
     static int rdn(int , int , int ) ;
     int durata();
 };
@@ -179,10 +191,10 @@ int perioada::durata() //data1=data curenta;data2=data achizitionare sau orice d
     return zile;
 
 }
-perioada::perioada(std::string data1,const proprietar &p)
+perioada::perioada(std::string data1,proprietar &p)
 {
     this->data1=data1;
-    data2=p.data_achizitionare;
+    data2=p.get_data_achizitionare();
 }
 perioada::perioada(std::string data1,std::string data2)
 {
@@ -208,11 +220,11 @@ std::string proprietar::get_apelativ() const
 
 std::ostream& operator<< (std::ostream &os,proprietar &p)
 {
-    os<<endl<<p.get_apelativ()<<p.get_nume()<<" are o locuinta la adresa "<<p.adr.get_adresa();
+    os<<endl<<p.get_apelativ()<<p.get_nume()<<" are o locuinta la adresa "<<p.get_adresa();
     return os;
 }
 
-void fisare_durata_rotunjita(int zi)
+void afisare_durata_rotunjita(int zi)
 {
     if(zi<30)
     {
@@ -237,7 +249,7 @@ int main()
 {
     proprietar Ana,Ion(Ana);
     adresa adIon;
-    Ana.adr.afisare_adresa();cout<<endl;
+    Ana.afisare_adresa();cout<<endl;
     Ion.schimb_prenume("Ion");
     Ion.schimb_cnp("5001109562301");
     Ion.schimb_fm();
@@ -256,10 +268,8 @@ int main()
     cout<<balcon2.get_nume()<<endl;
     perioada Ana_timp("31.10.2020",Ana);
     int zile= Ana_timp.durata();
-
-    cout<<Ana<<" de ";fisare_durata_rotunjita(zile);cout<<"\n";
+    cout<<Ana<<" de ";afisare_durata_rotunjita(zile);cout<<"\n";
     cout<<Ion<<" cu o sufragerie de "<<camera[0].arie()<<" de metrii patrati";
-    std::vector<int> v = {7, 5, 16, 8};
 
     return 0;
 }
