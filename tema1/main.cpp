@@ -1,13 +1,16 @@
 #include <iostream>
+#include <vector>
 #include <utility>
 using std::cout;
 using std::endl;
 
+///INCAPERE
 class incapere
 {
+protected:
     std::string nume;
     float lungime,latime;
-    friend class proprietar;
+    friend class locatar;
 public:
      explicit incapere(std::string="hol",float=4 ,float=2);
     incapere(const incapere &);
@@ -16,7 +19,13 @@ public:
     std::string get_nume();
     void schimbare_nume(std::string);
     incapere& operator=(incapere x);
+    friend std::ostream& operator<<(std::ostream &os , const incapere &i);
 };
+std::ostream& operator<< (std::ostream &os,incapere &i)
+{
+    os<<endl<<i.get_nume()<<" cu "<<i.arie() <<" metrii patrati";
+    return os;
+}
 void incapere::schimbare_nume(std::string n)
 {
     nume=n;
@@ -57,6 +66,7 @@ std::string incapere::get_nume()
     return nume+" ";
 }
 
+///ADRESA
 class adresa
 {
     std::string strada;
@@ -67,7 +77,7 @@ class adresa
     std::string interfon;
     std::string oras;
     std::string judet;
-    friend class proprietar;
+    friend class locatar;
 public:
     explicit adresa(std::string="Unirii" ,int =23,std::string="M4 bis" ,int=4 ,int=132 ,std::string="0132",std::string="Bucuresti" ,std::string ="Sector3");
     adresa(const adresa& );
@@ -75,9 +85,7 @@ public:
     std::string get_adresa();
 
 };
-
-adresa::adresa(std::string strada,int numar,std::string bloc,int etaj,int apartament,
-        std::string interfon,std::string oras,std::string judet)
+adresa::adresa(std::string strada,int numar,std::string bloc,int etaj,int apartament,std::string interfon,std::string oras,std::string judet)
 {
 this->strada=strada;
 this->numar=numar;
@@ -111,158 +119,334 @@ std::string adresa :: get_adresa()
     return adres;
 }
 
-class proprietar
+/// LOCATAR
+class locatar
 {
+protected:
     std::string nume;
     std::string prenume;
     std::string cnp;
     bool fm;
-    std::string data_achizitionare;
-    adresa adr;
+
 public:
-    explicit proprietar(std::string ="Popescu",std::string="Ana-Maria",std::string ="601225412043", bool=true,std::string="30.01.2000" );
-    proprietar(const proprietar& );
+    explicit locatar(std::string ="Popescu",std::string="Ana-Maria",std::string ="601225412043", bool=true );
+    locatar(const locatar& );
     std::string get_nume();
     std::string get_apelativ() const;
     void schimb_prenume(std::string);
     void schimb_cnp(std::string);
     void schimb_fm();
-    friend std::ostream& operator<<(std::ostream &os , const proprietar &p);
-    std::string get_data_achizitionare();
+    friend std::ostream& operator<<(std::ostream &os , const locatar &p);
+
     std::string get_adresa();
     void afisare_adresa();
-     ///
 
 };
-void proprietar::afisare_adresa()
+void locatar::afisare_adresa()
 {
-    adr.afisare_adresa();
+    //adr.afisare_adresa();
 }
-std::string proprietar::get_adresa()
+std::string locatar::get_adresa()
 {
-    return adr.get_adresa();
+    return "adresa";
 }
-std::string proprietar::get_data_achizitionare()
+locatar::locatar(std::string nume,std::string prenume,std::string cnp,bool fm)
 {
-    return data_achizitionare;
+    this->nume=nume;
+    this->prenume=prenume;
+    this->cnp=cnp;
+    this->fm=fm;
 }
-proprietar::proprietar(std::string nume,std::string prenume,std::string cnp,
-                        bool fm,std::string data_achizitionare)
-{
-this->nume=nume;
-this->prenume=prenume;
-this->cnp=cnp;
-this->fm=fm;
-this->data_achizitionare=data_achizitionare;
-}
-proprietar::proprietar(const proprietar& Ana)
+locatar::locatar(const locatar& Ana)
 {
     this->nume=Ana.nume;
     this->prenume=Ana.prenume;
     this->cnp=Ana.cnp;
     this->fm=Ana.fm;
-    this->data_achizitionare=Ana.data_achizitionare;
+
 }
-std::string proprietar :: get_nume()
+std::string locatar :: get_nume()
 {
-    return nume+" "+prenume;
+    return prenume+" "+nume;
+}
+void locatar::schimb_prenume(std::string prenume2)
+{
+    this->prenume=prenume2;
+}
+void locatar::schimb_cnp(std::string cnp2)
+{
+    this->cnp=cnp2;
+}
+void locatar:: schimb_fm()
+{
+    this->fm=!fm;
+}
+std::string locatar::get_apelativ() const
+{
+    return (fm) ? "Doamna " : "Domnul ";
 }
 
+class costuri_locatar
+{
+    int pret_curent;
+    int pret_intretinere;
+    int pret_gaze;
+    int pret_tv_net;
+    int pret_chirie;
+};
+
+///PERIOADA
 class perioada
 {
     std::string data1,data2;
+    std::string data3="16.12.2020";
+
 public:
-    perioada(std::string,std::string);
-    perioada(std::string,proprietar&);
+    perioada(std::string="12.02.2012",std::string="16.07.2015");
+    //perioada(std::string="22.11.2018",int=2);
     static int rdn(int , int , int ) ;
     int durata();
+    int durata(std::string,std::string);
+    void set_data2(std::string);
+    //friend class chirias;
+    void afisare_dat();
+    void afisare_durata_rotunjita(int);
+    void timp_chirie();
+    void timp_proprietar();
+
 };
-int perioada::rdn(int y, int m, int d) { /* Rata Die day one is 0001-01-01 */
+void perioada::timp_proprietar()
+{
+    int x=durata();
+    cout<<"proprietate personala de ";afisare_durata_rotunjita(x);
+}
+void perioada::timp_chirie()
+{
+    int x=durata(data3,data1);
+    int y=durata(data2,data3);
+    cout<<"inchiriat de ";afisare_durata_rotunjita(x);
+    if(y>=0)
+    {
+        cout<<" si va mai locui inca "; afisare_durata_rotunjita(y);
+    }
+    else cout<<" pe o perioada nederminata";
+}
+void perioada::afisare_durata_rotunjita(int zi)
+{
+    if(zi<30)
+    {
+        if(zi>=20)
+            cout<<" de";
+        if(zi>1 && zi<20)
+            cout<<" zile ";
+        if(zi==1)
+            cout<<"o zi";
+        if(zi==0)
+            cout<<" nici o zi ";
+    }
+    if((zi>=30) && zi < 365)
+        if((zi/30)==1)
+            cout<<"o luna";
+        else
+            cout<<zi/30<<" luni ";
+    if(zi>=365)
+    {
+        cout<<zi/365;
+        if((zi/365) >= 20 )
+            cout<<" de";
+        if((zi/365)==1)
+            cout<<" an";
+        else
+            cout<<" ani";
+    }
+
+}
+void perioada::afisare_dat() {cout<<"marinela"<<data1<<" "<<data2<<" "<<"data curenta este:"<<data3;}
+void perioada::set_data2(std::string d)
+{
+    data2=d;
+}
+int perioada::rdn(int y, int m, int d) { // Rata Die day one is 0001-01-01
     if (m < 3)
         y--, m += 12;
     return 365*y + y/4 - y/100 + y/400 + (153*m - 457)/5 + d - 306;
 }
-int perioada::durata() //data1=data curenta;data2=data achizitionare sau orice data din trecut
+int perioada::durata(std::string data3, std::string data1)
 {
-    std::string zi_curenta_string=data1.substr(0,2);
-    int zi_curenta=std::stoi(zi_curenta_string);
+    std::string zi_data3_string=data3.substr(0,2);
+    int zi_data3=std::stoi(zi_data3_string);
 
-    std::string luna_curenta_string=data1.substr(3,2);
-    int luna_curenta=std::stoi(luna_curenta_string);
+    std::string luna_data3_string=data3.substr(3,2);
+    int luna_data3=std::stoi(luna_data3_string);
 
-    std:: string an_curent_string=data1.substr(6,4);
-    int an_curent=std::stoi(an_curent_string);
+    std:: string an_data3_string=data3.substr(6,4);
+    int an_data3=std::stoi(an_data3_string);
 
-    std::string zi_achizitionare_string=data2.substr(0,2);
-    int zi_achizitioare=std::stoi(zi_achizitionare_string);
+    std::string zi_data1_string=data1.substr(0,2);
+    int zi_data1=std::stoi(zi_data1_string);
 
-    std::string luna_achizitionare_string=data2.substr(3,2);
-    int luna_achizionare=std::stoi(luna_achizitionare_string);
+    std::string luna_data1_string=data1.substr(3,2);
+    int luna_data1=std::stoi(luna_data1_string);
 
-    std:: string an_achizitionare_string=data2.substr(6,4);
-    int an_achizitionare=std::stoi(an_achizitionare_string);
+    std:: string an_data1_string=data1.substr(6,4);
+    int an_data1=std::stoi(an_data1_string);
 
-    int zile = rdn(an_curent, luna_curenta, zi_curenta) - rdn(an_achizitionare, luna_achizionare, zi_achizitioare);
+    int zile = rdn(an_data3, luna_data3, zi_data3) - rdn(an_data1, luna_data1, zi_data1);
     return zile;
-
 }
-perioada::perioada(std::string data1,proprietar &p)
+int perioada::durata()
 {
-    this->data1=data1;
-    data2=p.get_data_achizitionare();
+    std::string zi_data3_string=data3.substr(0,2);
+    int zi_data3=std::stoi(zi_data3_string);
+
+    std::string luna_data3_string=data3.substr(3,2);
+    int luna_data3=std::stoi(luna_data3_string);
+
+    std:: string an_data3_string=data3.substr(6,4);
+    int an_data3=std::stoi(an_data3_string);
+
+    std::string zi_data1_string=data1.substr(0,2);
+    int zi_data1=std::stoi(zi_data1_string);
+
+    std::string luna_data1_string=data1.substr(3,2);
+    int luna_data1=std::stoi(luna_data1_string);
+
+    std:: string an_data1_string=data1.substr(6,4);
+    int an_data1=std::stoi(an_data1_string);
+
+    int zile = rdn(an_data3, luna_data3, zi_data3) - rdn(an_data1, luna_data1, zi_data1);
+    return zile;
 }
 perioada::perioada(std::string data1,std::string data2)
 {
     this->data1=data1;
     this->data2=data2;
 }
-void proprietar::schimb_prenume(std::string prenume2)
+
+///PROPRIETAR
+class proprietar:public locatar
 {
-    this->prenume=prenume2;
+    std::string data_achizitionare;
+    perioada p;
+public:
+    proprietar(std::string ="Popescu",std::string="Ana-Maria",std::string ="601225412043", bool=true,std::string="16.12.2020");
+    proprietar(const proprietar& );
+    std::string get_data_achizitionare();
+    void afi();
+    void setp();
+    void timp();
+
+};
+void proprietar::timp()
+{
+    p.timp_proprietar();
 }
-void proprietar::schimb_cnp(std::string cnp2)
+void proprietar::setp()
 {
-    this->cnp=cnp2;
+    perioada s(data_achizitionare,"0000");
+    p=s;
 }
-void proprietar:: schimb_fm()
+void proprietar::afi()
 {
-    this->fm=!fm;
+    p.afisare_dat() ;
 }
-std::string proprietar::get_apelativ() const
+proprietar::proprietar(const proprietar &Ana):locatar(Ana)
 {
-    return (fm) ? "Doamna " : "Domnul ";
+    this->data_achizitionare=Ana.data_achizitionare;
+}
+proprietar::proprietar(std::string nume,std::string prenume,std::string cnp,bool fm,std::string data_achizitionare):locatar(nume,prenume,cnp,fm)
+{
+    this->data_achizitionare=data_achizitionare;
+    //p.set_data2(get_data_achizitionare);
+
+}
+std::string proprietar::get_data_achizitionare()
+{
+    return data_achizitionare;
 }
 
-std::ostream& operator<< (std::ostream &os,proprietar &p)
+///CHIRIAS
+class chirias :public locatar
+{
+    std::string inceputul_inchirierii;
+    std::string sfarsitul_inchirierii;
+    perioada p;
+public:
+    chirias(std::string ="Snow",std::string="John",std::string ="601225412043", bool=false,std::string="30.01.2011",std::string="17.12.2020");
+    chirias(const chirias& );
+    std::string get_inceputul_inchirierii();
+    std::string get_sfarsitul_inchirierii();
+    void setp();
+    void timp();
+
+
+};
+void chirias::timp()
+{
+    p.timp_chirie();
+}
+void chirias::setp()
+{
+    perioada s(inceputul_inchirierii,sfarsitul_inchirierii);
+    p=s;
+}
+std::string chirias:: get_inceputul_inchirierii()
+{
+    return inceputul_inchirierii;
+}
+std::string chirias:: get_sfarsitul_inchirierii()
+{
+    return sfarsitul_inchirierii;
+}
+chirias::chirias(const chirias &Ana):locatar(Ana)
+{
+    this->inceputul_inchirierii=Ana.inceputul_inchirierii;
+    this->sfarsitul_inchirierii=sfarsitul_inchirierii;
+}
+chirias::chirias(std::string nume,std::string prenume,std::string cnp,bool fm,std::string inceputul_inchirierii,std::string sfarsitul_inchirierii):locatar(nume,prenume,cnp,fm)
+{
+    this->inceputul_inchirierii=inceputul_inchirierii;
+    this->sfarsitul_inchirierii=sfarsitul_inchirierii;
+
+}
+
+
+///LOCUINTA
+class locuinta
+{
+    adresa a;
+    std::vector<incapere>incaperi;
+    std::vector<locatar>oameni;
+public:
+    void add_incaperi(incapere);
+    void add_oameni(locatar);
+    void afisare_incaperi();
+};
+void locuinta::add_oameni(locatar om)
+{
+    oameni.push_back(om);
+}
+void locuinta::add_incaperi(incapere i)
+{
+    incaperi.push_back(i);
+}
+void locuinta::afisare_incaperi()
+{
+    for(auto &it:incaperi)
+    {
+        cout<<it<<endl;
+    }
+}
+std::ostream& operator<< (std::ostream &os,locatar &p)
 {
     os<<endl<<p.get_apelativ()<<p.get_nume()<<" are o locuinta la adresa "<<p.get_adresa();
     return os;
 }
 
-void afisare_durata_rotunjita(int zi)
-{
-    if(zi<30)
-    {
-        cout<<zi;
-        if(zi>=20)
-            cout<<" de";
-        cout<<" zile ";
-    }
-    if((zi>=30) && zi < 365)
-        cout<<zi/30<<" luni ";
-    if(zi>=365)
-    {
-        cout<<zi/365;
-        if((zi/365) >= 20 )
-            cout<<" de";
-        cout<<" ani";
-    }
-
-}
-
 int main()
 {
-    proprietar Ana,Ion(Ana);
+    proprietar Ana;
+    chirias Ion;
     adresa adIon;
     Ana.afisare_adresa();cout<<endl;
     Ion.schimb_prenume("Ion");
@@ -281,12 +465,20 @@ int main()
     incapere debara("debara",1,0.5);
     incapere balcon1("balcon",2,2);
     incapere balcon2(balcon1);
+    locuinta L;
+    L.add_incaperi(camera[0]);
+    L.add_incaperi(camera[2]);
+    L.afisare_incaperi();
     balcon2.afisare_arie();
     cout<<balcon2.get_nume()<<endl;
-    perioada Ana_timp("31.10.2020",Ana);
+    /*perioada Ana_timp("31.10.2020",Ana);
     int zile= Ana_timp.durata();
     cout<<Ana<<" de ";afisare_durata_rotunjita(zile);cout<<"\n";
     cout<<Ion<<" cu o sufragerie de "<<camera[0].arie()<<" de metrii patrati";
+*/
+
 
     return 0;
 }
+
+
