@@ -1,0 +1,30 @@
+2
+1
+2
+Unirii 23 M4bis 5 999 0999 Bucuresti Sector3
+2
+sufragerie 5 4
+dormitor1 4 3
+hol 4 2
+baie 3 2
+bucatarie 3.5 2.5
+debara 1 0.5
+balcon 2 2
+John Snow 601225412043 0 16.07.2020
+Aria Stark 601225444043 1 01.10.2020 01.10.2021 200
+Sansa Stark 601225444043 1 01.10.2020 1.10.2021 200
+0
+2
+Iubirii 23 M4bis 5 999 0999 Bucuresti Sector3
+3
+sufragerie 5 4
+dormitor1 4 3
+dormitor2 4 2.8
+hol 4 2
+baie 3 2
+bucatarie 3.5 2.5
+debara 1 0.5
+balcon 2 2
+Thomas Shelby 601225412043 0 16.07.2020
+Grace Shelby 601225444043 1
+

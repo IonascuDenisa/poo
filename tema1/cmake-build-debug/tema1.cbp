@@ -82,7 +82,49 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/mihaela/CLionProjects/tema1/adresa.cpp">
+			<Option target="tema1"/>
+		</Unit>
+		<Unit filename="/home/mihaela/CLionProjects/tema1/adresa.h">
+			<Option target="tema1"/>
+		</Unit>
+		<Unit filename="/home/mihaela/CLionProjects/tema1/chirias.cpp">
+			<Option target="tema1"/>
+		</Unit>
+		<Unit filename="/home/mihaela/CLionProjects/tema1/chirias.h">
+			<Option target="tema1"/>
+		</Unit>
+		<Unit filename="/home/mihaela/CLionProjects/tema1/incapere.cpp">
+			<Option target="tema1"/>
+		</Unit>
+		<Unit filename="/home/mihaela/CLionProjects/tema1/incapere.h">
+			<Option target="tema1"/>
+		</Unit>
+		<Unit filename="/home/mihaela/CLionProjects/tema1/locatar.cpp">
+			<Option target="tema1"/>
+		</Unit>
+		<Unit filename="/home/mihaela/CLionProjects/tema1/locatar.h">
+			<Option target="tema1"/>
+		</Unit>
+		<Unit filename="/home/mihaela/CLionProjects/tema1/locuinta.cpp">
+			<Option target="tema1"/>
+		</Unit>
+		<Unit filename="/home/mihaela/CLionProjects/tema1/locuinta.h">
+			<Option target="tema1"/>
+		</Unit>
 		<Unit filename="/home/mihaela/CLionProjects/tema1/main.cpp">
+			<Option target="tema1"/>
+		</Unit>
+		<Unit filename="/home/mihaela/CLionProjects/tema1/perioada.cpp">
+			<Option target="tema1"/>
+		</Unit>
+		<Unit filename="/home/mihaela/CLionProjects/tema1/perioada.h">
+			<Option target="tema1"/>
+		</Unit>
+		<Unit filename="/home/mihaela/CLionProjects/tema1/proprietar.cpp">
+			<Option target="tema1"/>
+		</Unit>
+		<Unit filename="/home/mihaela/CLionProjects/tema1/proprietar.h">
 			<Option target="tema1"/>
 		</Unit>
 		<Unit filename="/home/mihaela/CLionProjects/tema1/CMakeLists.txt">
