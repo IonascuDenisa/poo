@@ -3,6 +3,7 @@
 //
 
 #include "locuinta.h"
+#include "incapere.h"
 
 using std::cout;
 using std::endl;

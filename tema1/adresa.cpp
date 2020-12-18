@@ -2,6 +2,7 @@
 // Created by mihaela on 18.12.2020.
 //
 
+#include <fstream>
 #include "adresa.h"
 void adresa::citire_adresa(std::ifstream &f)
 {

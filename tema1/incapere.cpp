@@ -10,11 +10,12 @@ void incapere::citiref(std::ifstream &f)
 {
     f>>nume>>lungime>>latime;
 }
-std::ostream& operator<< (std::ostream &os,incapere &i)
-{
+
+std::ostream &operator<<(std::ostream &os, incapere i) {
     os<<endl<<i.get_nume()<<" cu "<<i.arie() <<" metrii patrati";
     return os;
 }
+
 void incapere::schimbare_nume(std::string &n)
 {
     nume=n;
@@ -54,3 +55,4 @@ std::string incapere::get_nume()
 {
     return nume+" ";
 }
+

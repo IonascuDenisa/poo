@@ -19,7 +19,7 @@ public:
     std::string get_nume();
     void schimbare_nume(std::string&);
     incapere& operator=(incapere x);
-    friend std::ostream& operator<<(std::ostream &os , const incapere &i);
+    friend std::ostream& operator<<(std::ostream &os , incapere i);
     void citiref(std::ifstream &f);
 };
 
