@@ -19,7 +19,7 @@ int main()
     int nr_locuinte;
     f>>nr_locuinte; //linia1
     std::vector<locuinta>locuinte;
-    while(nr_locuinte--)
+    while(nr_locuinte)
     {
         bool chiriasi;
         f>>chiriasi; //linia2
@@ -58,14 +58,18 @@ int main()
                  L.add_oameni(c);
             }
         }
-         else
+        else
+        {
              while(nr_locuitori--)
              {
                  locatar loc;
                  loc.citiref(f);
                 L.add_oameni(loc);
              }
+        }
+        
         locuinte.push_back(L);
+        nr_locuinte--;
     }
     for(auto &it:locuinte){
         it.afisare_oameni();
