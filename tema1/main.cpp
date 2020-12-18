@@ -21,13 +21,11 @@ int main()
     std::vector<locuinta>locuinte;
     while(nr_locuinte--)
     {
-        locuinta L;
         bool chiriasi;
-        L.set_chiriasi(chiriasi);
         f>>chiriasi; //linia2
         int nr_locuitori;
         f>>nr_locuitori; //linia3
-        L.set_nr_locuitori(nr_locuitori);
+        locuinta L(chiriasi,nr_locuitori);
         if(chiriasi==0)
             nr_locuitori--;
 
@@ -75,6 +73,7 @@ int main()
         cout<<endl<<endl;
 
     }
+    f.close();
     return 0;
 }
 

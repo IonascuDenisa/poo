@@ -8,6 +8,11 @@
 using std::cout;
 using std::endl;
 
+locuinta::locuinta (bool chiriasi,int nr_locuitori)
+{
+    this->chiriasi=chiriasi;
+    this->nr_locuitori=nr_locuitori;
+}
 float locuinta::aria_locuintei()
 {
     float arie=0;

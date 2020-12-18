@@ -18,6 +18,7 @@ class locuinta {
     std::vector<incapere>incaperi;
     std::vector<locatar>oameni;
 public:
+    locuinta(bool="true",int=3);
     void add_incaperi(incapere const &);
     void add_oameni(locatar const &);
     void afisare_incaperi();
