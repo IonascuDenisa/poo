@@ -26,7 +26,7 @@ int main()
         int nr_locuitori;
         f>>nr_locuitori; //linia3
         locuinta L(chiriasi,nr_locuitori);
-        if(chiriasi==0)
+        if(!chiriasi)
             nr_locuitori--;
 
     ///citire adresa
@@ -37,11 +37,12 @@ int main()
         int nr_camere;
         f>>nr_camere; //linia5
         nr_camere+=5;
-        while(nr_camere--)
+        while(nr_camere)
         {
             incapere i;
             i.citiref(f);
             L.add_incaperi(i);
+            nr_camere--;
         }
     ///citire proprietar
         proprietar p;
@@ -67,7 +68,7 @@ int main()
                 L.add_oameni(loc);
              }
         }
-        
+
         locuinte.push_back(L);
         nr_locuinte--;
     }
