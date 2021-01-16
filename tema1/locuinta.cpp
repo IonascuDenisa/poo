@@ -54,21 +54,30 @@ std::string locuinta::get_adresa()
 }
 void locuinta::set_adresa(adresa &ad)
 {
-    a=ad;
+    a = ad;
 }
-void locuinta::add_oameni(locatar const & om)
-{
+
+void locuinta::add_oameni(locatar const &om) {
     oameni.push_back(om);
 }
-void locuinta::add_incaperi(incapere const &i)
-{
+
+void locuinta::add_incaperi(incapere const &i) {
     incaperi.push_back(i);
 }
-void locuinta::afisare_incaperi()
-{
-    for(auto &it:incaperi)
-    {
-        cout<<it<<endl;
+
+void locuinta::afisare_incaperi() {
+    for (auto &it:incaperi) {
+        cout << it << endl;
     }
 }
 
+std::ostream &operator<<(std::ostream &os, const locuinta &locuinta) {
+    os << "chiriasi: " << locuinta.chiriasi << " nr_locuitori: " << locuinta.nr_locuitori << " a: " << locuinta.a;
+    //<< " incaperi: " << locuinta.incaperi << " oameni: " << locuinta.oameni;
+    return os;
+}
+
+void locuinta::afisare(std::ostream &os) const {
+    os << "chiriasi: " << locuinta::chiriasi << " nr_locuitori: " << locuinta::nr_locuitori << " a: " << locuinta::a;
+
+}

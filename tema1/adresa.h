@@ -24,6 +24,7 @@ public:
     std::string get_adresa();
     void citire_adresa(std::ifstream &f);
 
+    friend std::ostream &operator<<(std::ostream &os, const adresa &adresa);
 };
 
 
