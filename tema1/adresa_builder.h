@@ -4,7 +4,6 @@
 
 #ifndef TEMA1_ADRESA_BUILDER_H
 #define TEMA1_ADRESA_BUILDER_H
-
 #include "adresa.h"
 
 class adresa_builder {

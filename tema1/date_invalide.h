@@ -4,7 +4,6 @@
 
 #ifndef TEMA1_DATE_INVALIDE_H
 #define TEMA1_DATE_INVALIDE_H
-
 #include <iostream>
 
 class date_invalide : public std::runtime_error {

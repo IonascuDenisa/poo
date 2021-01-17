@@ -45,7 +45,7 @@ public:
 
     virtual void afisare(std::ostream &os) const;
 
-    ~locuinta();
+     ~locuinta();
 
 };
 #endif //TEMA1_LOCUINTA_H

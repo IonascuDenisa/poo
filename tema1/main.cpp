@@ -86,7 +86,6 @@ int main() {
     adresa_builder add;
     adresa addd = add.bloc("bloc_nou").apartament(13).build();
     cout << endl << "adresa noua: " << addd;
-    * /
     f.close();
     return 0;
 }
