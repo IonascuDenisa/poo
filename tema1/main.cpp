@@ -11,11 +11,22 @@ using std::endl;
 #include "proprietar.h"
 #include "chirias.h"
 #include "locuinta.h"
+#include "adresa_builder.h"
+#include "date_invalide.h"
 
 int main() {
     std::ifstream f("date.txt");
-    int nr_locuinte;
-    f >> nr_locuinte; //linia1
+    int nr_locuinte = -16;
+    f >> nr_locuinte;//linia1
+
+    try {
+        if (nr_locuinte <= 0)
+            throw date_invalide("numarul de locuinte introdus nu este corect");
+    }
+    catch (date_invalide &e) {
+        std::cout << "eroare citire: " << e.what() << "\n";
+    }
+
     std::vector<locuinta> locuinte;
     while (nr_locuinte) {
         bool chiriasi;
@@ -27,6 +38,7 @@ int main() {
             nr_locuitori--;
 
         ///citire adresa
+
         adresa a;
         a.citire_adresa(f);
         L.set_adresa(a);
@@ -42,6 +54,7 @@ int main() {
         }
         ///citire proprietar
         proprietar p;
+
         p.citiref(f); //linia13
         L.add_oameni(p);
         ///citire chiriasi
@@ -69,6 +82,11 @@ int main() {
         cout << endl << endl;
 
     }
+
+    adresa_builder add;
+    adresa addd = add.bloc("bloc_nou").apartament(13).build();
+    cout << endl << "adresa noua: " << addd;
+    * /
     f.close();
     return 0;
 }

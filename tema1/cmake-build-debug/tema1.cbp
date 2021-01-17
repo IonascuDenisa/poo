@@ -88,10 +88,22 @@
 		<Unit filename="/home/mihaela/CLionProjects/tema1/adresa.h">
 			<Option target="tema1"/>
 		</Unit>
+		<Unit filename="/home/mihaela/CLionProjects/tema1/adresa_builder.cpp">
+			<Option target="tema1"/>
+		</Unit>
+		<Unit filename="/home/mihaela/CLionProjects/tema1/adresa_builder.h">
+			<Option target="tema1"/>
+		</Unit>
 		<Unit filename="/home/mihaela/CLionProjects/tema1/chirias.cpp">
 			<Option target="tema1"/>
 		</Unit>
 		<Unit filename="/home/mihaela/CLionProjects/tema1/chirias.h">
+			<Option target="tema1"/>
+		</Unit>
+		<Unit filename="/home/mihaela/CLionProjects/tema1/date_invalide.cpp">
+			<Option target="tema1"/>
+		</Unit>
+		<Unit filename="/home/mihaela/CLionProjects/tema1/date_invalide.h">
 			<Option target="tema1"/>
 		</Unit>
 		<Unit filename="/home/mihaela/CLionProjects/tema1/incapere.cpp">

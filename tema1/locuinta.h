@@ -23,7 +23,7 @@ public:
 
     void add_incaperi(incapere const &);
 
-    void add_oameni(locatar const &);
+    void add_oameni(locatar &);
 
     void afisare_incaperi();
 
@@ -44,6 +44,8 @@ public:
     friend std::ostream &operator<<(std::ostream &os, const locuinta &locuinta);
 
     virtual void afisare(std::ostream &os) const;
+
+    ~locuinta();
 
 };
 #endif //TEMA1_LOCUINTA_H

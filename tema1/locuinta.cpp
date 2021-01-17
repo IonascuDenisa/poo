@@ -57,7 +57,7 @@ void locuinta::set_adresa(adresa &ad)
     a = ad;
 }
 
-void locuinta::add_oameni(locatar const &om) {
+void locuinta::add_oameni(locatar &om) {
     oameni.push_back(om);
 }
 
@@ -79,5 +79,10 @@ std::ostream &operator<<(std::ostream &os, const locuinta &locuinta) {
 
 void locuinta::afisare(std::ostream &os) const {
     os << "chiriasi: " << locuinta::chiriasi << " nr_locuitori: " << locuinta::nr_locuitori << " a: " << locuinta::a;
+
+}
+
+locuinta::~locuinta() {
+
 
 }

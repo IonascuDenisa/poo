@@ -17,6 +17,8 @@ class adresa {
     std::string oras;
     std::string judet;
     friend class locatar;
+
+    friend class adresa_builder;
 public:
     explicit adresa(std::string="Unirii" ,int =23,std::string="M4 bis" ,int=4 ,int=132 ,std::string="0132",std::string="Bucuresti" ,std::string ="Sector3");
     adresa(const adresa& );
